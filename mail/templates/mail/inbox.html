@@ -12,14 +12,13 @@
     <hr>
 
     <div id="emails-view">
-    <h4>I'm here</h4>
-    <div id="emails">
+    <div id="posts">
         </div>
     </div>
 
     <div id="compose-view">
         <h3>New Email</h3>
-        <form id="compose-form">
+        <form id="compose-form" action="{% url 'compose' %}" method="post">
             <div class="form-group">
                 From: <input disabled class="form-control" value="{{ request.user.email }}">
             </div>

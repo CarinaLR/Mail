@@ -20,8 +20,7 @@ function compose_email() {
   document.querySelector("#emails-view").style.display = "none";
   document.querySelector("#compose-view").style.display = "block";
 
-  //Onsubmit form call postEmail function.
-  document.querySelector("#compose-form").onsubmit = () => {
+  document.querySelector("compose-form").onsubmit = () => {
     postEmail();
   };
 
@@ -40,10 +39,63 @@ function load_mailbox(mailbox) {
   document.querySelector("#emails-view").innerHTML = `<h3>${
     mailbox.charAt(0).toUpperCase() + mailbox.slice(1)
   }</h3>`;
+
+  if (mailbox === "inbox") {
+    loadInbox();
+  }
+  if (mailbox === "sent") {
+    loadSent();
+  }
+  if (mailbox === "archive") {
+    loadArchive();
+  }
 }
 
 function loadInbox() {
-  fetch(`/emails/<str:mailbox>`)
+  fetch("/emails/inbox")
+    .then((response) => response.json())
+    .then((emails) => {
+      // Print emails
+      console.log(emails);
+
+      // ... do something else with emails ...
+      emails.forEach(add_email);
+    });
+}
+
+// Add a new post with given contents to DOM
+function add_email(contents) {
+  var recipients = document.querySelector("#compose-recipients").value;
+  var subject = document.querySelector("#compose-subject").value;
+  var body = document.querySelector("#compose-body").value;
+
+  contents = {
+    recipients: recipients,
+    subject: subject,
+    body: body,
+  };
+  // Create new email
+  const email = document.createElement("div");
+  email.className = "post";
+  email.innerHTML = contents;
+
+  // Add post to DOM
+  document.querySelector("#posts").append(email);
+}
+
+function loadSent() {
+  fetch("/emails/sent")
+    .then((response) => response.json())
+    .then((emails) => {
+      // Print emails
+      console.log(emails);
+
+      // ... do something else with emails ...
+    });
+}
+
+function loadArchive() {
+  fetch("/emails/archive")
     .then((response) => response.json())
     .then((emails) => {
       // Print emails
@@ -54,12 +106,16 @@ function loadInbox() {
 }
 
 function postEmail() {
+  var recipients = document.querySelector("#compose-recipients").value;
+  var subject = document.querySelector("#compose-subject").value;
+  var body = document.querySelector("#compose-body").value;
+
   fetch("/emails", {
     method: "POST",
     body: JSON.stringify({
-      recipients: "baz@example.com",
-      subject: "Meeting time",
-      body: "How about we meet tomorrow at 3pm?",
+      recipients: recipients,
+      subject: subject,
+      body: body,
     }),
   })
     .then((response) => response.json())
@@ -67,13 +123,4 @@ function postEmail() {
       // Print result
       console.log(result);
     });
-}
-
-function eachEmail() {
-  fetch(`/emails/<int:emails_id>`, {
-    method: "PUT",
-    body: JSON.stringify({
-      archived: true,
-    }),
-  });
 }
