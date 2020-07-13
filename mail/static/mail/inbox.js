@@ -74,7 +74,7 @@ function add_sent(contents) {
   // Create new post
   const emailSent = document.createElement("div");
   emailSent.className = "post";
-  emailSent.innerHTML = contents;
+  emailSent.innerHTML = `From: ${contents.recipients}  Subject:  ${contents.subject}`;
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailSent);
