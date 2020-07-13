@@ -86,11 +86,12 @@ function add_sent(contents) {
     contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1);
   const subject = contents.subject;
   const time = contents.timestamp;
-  const space = "   ";
+
   //Create td for each email
   const emailTd = document.createElement("td");
   emailTd.className = "tdEmails";
-  emailTd.innerHTML = ` From: ${space}${sender}${space} Subject:${space} ${subject}${space} ${time}${space}`;
+  emailTd.innerHTML = ` From: ${sender}
+    Subject: ${subject}, ${time}`;
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailTd);
