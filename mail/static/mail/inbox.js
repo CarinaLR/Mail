@@ -74,7 +74,11 @@ function add_sent(contents) {
   // Create new post
   const emailSent = document.createElement("div");
   emailSent.className = "post";
-  emailSent.innerHTML = `From: ${contents.recipients}  Subject:  ${contents.subject}`;
+  //Using substr() build js function and last indexOf() eliminates everything after the "@" character.
+  emailSent.innerHTML = `From: ${
+    contents.sender.charAt(0).toUpperCase() +
+    contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1)
+  }    Subject:  ${contents.subject}`;
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailSent);
