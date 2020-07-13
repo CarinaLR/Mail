@@ -26,7 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Print result
         console.log(result);
       });
-    return false;
+    // return false;
+    load_mailbox("sent");
   };
 
   // By default, load the inbox
@@ -64,7 +65,7 @@ function loadSent() {
       console.log(emails);
 
       // ... do something else with emails ...
-      emails.posts.forEach(add_sent);
+      emails.forEach(add_sent);
     });
 }
 
