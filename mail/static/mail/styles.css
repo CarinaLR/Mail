@@ -3,7 +3,28 @@ textarea {
 }
 
 .post {
-  background-color: #e6e6fa;
+  background-color: #f0fff0;
   padding: 20px;
   margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-style: outset;
+}
+
+.tdEmails {
+  background-color: #f0fff0;
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-style: outset;
+}
+
+.trEmails {
+  background-color: #f0fff0;
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-style: outset;
 }

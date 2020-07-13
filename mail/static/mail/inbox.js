@@ -71,15 +71,27 @@ function loadSent() {
 
 // Add a new sent email to the sent inbox with given contents to DOM
 function add_sent(contents) {
-  // Create new post
-  const emailSent = document.createElement("div");
-  emailSent.className = "post";
-  //Using substr() build js function and last indexOf() eliminates everything after the "@" character.
-  emailSent.innerHTML = `From: ${
+  // // Create new post
+  // const emailSent = document.createElement("div");
+  // emailSent.className = "post";
+  // //Using substr() build js function and last indexOf() eliminates everything after the "@" character.
+  // emailSent.innerHTML = `From: ${
+  //   contents.sender.charAt(0).toUpperCase() +
+  //   contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1)
+  // }        Subject:  ${contents.subject}        ${contents.timestamp}`;
+
+  //Set variables to pass as text
+  const sender =
     contents.sender.charAt(0).toUpperCase() +
-    contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1)
-  }    Subject:  ${contents.subject}`;
+    contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1);
+  const subject = contents.subject;
+  const time = contents.timestamp;
+  const space = "   ";
+  //Create td for each email
+  const emailTd = document.createElement("td");
+  emailTd.className = "tdEmails";
+  emailTd.innerHTML = ` From: ${space}${sender}${space} Subject:${space} ${subject}${space} ${time}${space}`;
 
   // Add post to DOM
-  document.querySelector("#emails-view").append(emailSent);
+  document.querySelector("#emails-view").append(emailTd);
 }
