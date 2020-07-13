@@ -77,5 +77,5 @@ function add_sent(contents) {
   emailSent.innerHTML = contents;
 
   // Add post to DOM
-  document.querySelector("#posts").append(emailSent);
+  document.querySelector("#emails-view").append(emailSent);
 }
