@@ -19,3 +19,11 @@ textarea {
   justify-content: space-between;
   border-style: outset;
 }
+
+.divEmails {
+  background-color: #f0fff0;
+  height: 8px;
+  clear: both;
+  padding: 0;
+  border-style: outset;
+}

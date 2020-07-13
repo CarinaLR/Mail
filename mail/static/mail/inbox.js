@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", () => load_mailbox("inbox"));
   document
     .querySelector("#sent")
-    .addEventListener("click", () => load_mailbox("sent"), loadSent());
+    .addEventListener("click", () => load_mailbox("sent"));
   document
     .querySelector("#archived")
     .addEventListener("click", () => load_mailbox("archive"));
@@ -54,10 +54,20 @@ function load_mailbox(mailbox) {
   document.querySelector("#emails-view").innerHTML = `<h3>${
     mailbox.charAt(0).toUpperCase() + mailbox.slice(1)
   }</h3>`;
+
+  if (mailbox === "inbox") {
+    loadInbox();
+  }
+  if (mailbox === "sent") {
+    loadSent();
+  }
+  if (mailbox === "archive") {
+    loadArchive();
+  }
 }
 
-// Load sent emails
-function loadSent() {
+// Load inbox emails
+function loadInbox() {
   fetch("/emails/inbox")
     .then((response) => response.json())
     .then((emails) => {
@@ -65,21 +75,12 @@ function loadSent() {
       console.log(emails);
 
       // ... do something else with emails ...
-      emails.forEach(add_sent);
+      emails.forEach(add_emailsInbox);
     });
 }
 
-// Add a new sent email to the sent inbox with given contents to DOM
-function add_sent(contents) {
-  // // Create new post
-  // const emailSent = document.createElement("div");
-  // emailSent.className = "post";
-  // //Using substr() build js function and last indexOf() eliminates everything after the "@" character.
-  // emailSent.innerHTML = `From: ${
-  //   contents.sender.charAt(0).toUpperCase() +
-  //   contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1)
-  // }        Subject:  ${contents.subject}        ${contents.timestamp}`;
-
+// Add a new email to the corresponding mailbox with given contents to DOM
+function add_emailsInbox(contents) {
   //Set variables to pass as text
   const sender =
     contents.sender.charAt(0).toUpperCase() +
@@ -90,8 +91,65 @@ function add_sent(contents) {
   //Create td for each email
   const emailTd = document.createElement("td");
   emailTd.className = "tdEmails";
-  emailTd.innerHTML = ` From: ${sender}
-    Subject: ${subject}, ${time}`;
+  emailTd.innerHTML = `From: ${sender} Subject:  ${subject} ${time}`;
+
+  // Add post to DOM
+  document.querySelector("#emails-view").append(emailTd);
+}
+
+// Load sent emails
+function loadSent() {
+  fetch("/emails/sent")
+    .then((response) => response.json())
+    .then((emails) => {
+      // Print emails
+      console.log(emails);
+
+      // ... do something else with emails ...
+      emails.forEach(add_emailsSent);
+    });
+}
+
+// Add a sent email to the corresponding mailbox with given contents to DOM
+function add_emailsSent(contents) {
+  //Set variables to pass as text
+  const recipients = contents.recipients;
+  const subject = contents.subject;
+  const time = contents.timestamp;
+
+  //Create td for each email
+  const emailTd = document.createElement("td");
+  emailTd.className = "tdEmails";
+  emailTd.innerHTML = `To: ${recipients} Subject:  ${subject} ${time}`;
+
+  // Add post to DOM
+  document.querySelector("#emails-view").append(emailTd);
+}
+
+// Load archive emails
+function loadArchive() {
+  fetch("/emails/archive")
+    .then((response) => response.json())
+    .then((emails) => {
+      // Print emails
+      console.log(emails);
+
+      // ... do something else with emails ...
+      emails.forEach(add_emailsArchive);
+    });
+}
+
+// Add a new email to the corresponding mailbox with given contents to DOM
+function add_emailsArchive(contents) {
+  //Set variables to pass as text
+  const recipients = contents.recipients;
+  const subject = contents.subject;
+  const time = contents.timestamp;
+
+  //Create td for each email
+  const emailTd = document.createElement("td");
+  emailTd.className = "tdEmails";
+  emailTd.innerHTML = `To: ${recipients} Subject:  ${subject} ${time}`;
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailTd);
