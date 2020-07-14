@@ -72,7 +72,7 @@ function loadInbox() {
     .then((response) => response.json())
     .then((emails) => {
       // Print emails
-      console.log(emails);
+      console.log("emails ->", emails);
 
       // ... do something else with emails ...
       emails.forEach(add_emailsInbox);
@@ -97,7 +97,7 @@ function add_emailsInbox(contents) {
   // Add post to DOM
   document.querySelector("#emails-view").append(emailTd);
 
-  if (read === true) {
+  if (read !== true) {
     document.querySelector(".tdEmails").style.backgroundColor = "lightGrey";
   } else {
     document.querySelector(".tdEmails").style.backgroundColor = "lavenderBlush";
