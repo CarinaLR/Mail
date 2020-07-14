@@ -102,6 +102,7 @@ function add_emailsInbox(contents) {
   } else {
     document.querySelector(".tdEmails").style.backgroundColor = "lavenderBlush";
   }
+  document.querySelector(".tdEmails").addEventListener("click", requestEmail);
 }
 
 // Load sent emails
@@ -165,4 +166,64 @@ function add_emailsArchive(contents) {
     // Add post to DOM
     document.querySelector("#emails-view").append(emailTd);
   }
+}
+
+function requestEmail() {
+  fetch("/emails/2")
+    .then((response) => response.json())
+    .then((email) => {
+      // Print emails
+      console.log("email ->", email);
+
+      // ... do something else with emails ...
+      load_viewEmail(email);
+    });
+}
+
+function load_viewEmail(email) {
+  // Show the mailbox and hide other views
+  document.querySelector("#emails-view").style.display = "block";
+  document.querySelector("#compose-view").style.display = "none";
+
+  //Set variables to pass as text
+  const sender =
+    email.sender.charAt(0).toUpperCase() +
+    email.sender.substr(1, email.sender.lastIndexOf("@") - 1);
+  const recipients = email.recipients;
+  const subject = email.subject;
+  const time = email.timestamp;
+  const body = email.body;
+
+  // Show the selected email block
+  document.querySelector("#emails-view").innerHTML = `Your selected email`;
+
+  //Create elements holding the information from the selected email
+  const emailBlockUpFrom = document.createElement("div");
+  emailBlockUpFrom.innerHTML = `<span className="info">From: ${sender}</span>`;
+  const emailBlockUpTo = document.createElement("div");
+  emailBlockUpTo.innerHTML = `<span className="info">To: ${recipients}</span>`;
+  const emailBlockUpSubject = document.createElement("div");
+  emailBlockUpSubject.innerHTML = `<span className="info">Subject: ${subject}</span>`;
+  const emailBlockUpTime = document.createElement("div");
+  emailBlockUpTime.innerHTML = `<span className="info">Timestamp: ${time}</span>`;
+  const lineBreak = document.createElement("hr");
+  const emailBlockDownBody = document.createElement("div");
+  emailBlockDownBody.innerHTML = `<span className="content">${body}</span>`;
+  const replyButton = document.createElement("button");
+  replyButton.className = "btn btn-sm btn-outline-primary";
+  replyButton.innerHTML = "Reply";
+
+  //Create parent 'div' and append children elements
+  const emailBlock = document.createElement("div");
+  emailBlock.className = "emailBlock";
+  emailBlock.appendChild(emailBlockUpFrom);
+  emailBlock.appendChild(emailBlockUpTo);
+  emailBlock.appendChild(emailBlockUpSubject);
+  emailBlock.appendChild(emailBlockUpTime);
+  emailBlock.appendChild(lineBreak);
+  emailBlock.appendChild(emailBlockDownBody);
+  emailBlock.appendChild(replyButton);
+
+  // Add element to DOM
+  document.querySelector("#emails-view").append(emailBlock);
 }
