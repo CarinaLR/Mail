@@ -33,9 +33,9 @@ textarea {
   direction: ltr;
   border-spacing: 0;
   border-collapse: collapse;
-  background-color: #faf0e6;
+  background-color: #f5f5dc;
   height: 432px;
-  width: 839.904px;
+  width: content-box;
   padding-right: 15px;
   padding-left: 15px;
   justify-content: space-between;

@@ -195,7 +195,7 @@ function load_viewEmail(email) {
   const body = email.body;
 
   // Show the selected email block
-  document.querySelector("#emails-view").innerHTML = `Your selected email`;
+  document.querySelector("#emails-view").innerHTML = `<span></span>`;
 
   //Create elements holding the information from the selected email
   const emailBlockUpFrom = document.createElement("div");
