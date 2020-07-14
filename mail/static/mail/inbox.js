@@ -88,6 +88,7 @@ function add_emailsInbox(contents) {
   const subject = contents.subject;
   const time = contents.timestamp;
   const read = contents.read;
+  const email_id = contents.id;
 
   //Create td for each email
   const emailTd = document.createElement("td");
