@@ -87,6 +87,7 @@ function add_emailsInbox(contents) {
     contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1);
   const subject = contents.subject;
   const time = contents.timestamp;
+  const read = contents.read;
 
   //Create td for each email
   const emailTd = document.createElement("td");
@@ -95,6 +96,12 @@ function add_emailsInbox(contents) {
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailTd);
+
+  if (read === true) {
+    document.querySelector(".tdEmails").style.backgroundColor = "lightGrey";
+  } else {
+    document.querySelector(".tdEmails").style.backgroundColor = "lavenderBlush";
+  }
 }
 
 // Load sent emails
