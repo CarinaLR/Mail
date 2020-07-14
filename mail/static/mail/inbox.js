@@ -149,7 +149,9 @@ function loadArchive() {
 // Add a new email to the corresponding mailbox with given contents to DOM
 function add_emailsArchive(contents) {
   //Set variables to pass as text
-  const recipients = contents.recipients;
+  const sender =
+    contents.sender.charAt(0).toUpperCase() +
+    contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1);
   const subject = contents.subject;
   const time = contents.timestamp;
   const archived = contents.archived;
@@ -158,7 +160,7 @@ function add_emailsArchive(contents) {
     //Create td for each email
     const emailTd = document.createElement("td");
     emailTd.className = "tdEmails";
-    emailTd.innerHTML = `To: ${recipients} Subject:  ${subject} ${time}`;
+    emailTd.innerHTML = `From: ${sender} Subject:  ${subject} ${time}`;
 
     // Add post to DOM
     document.querySelector("#emails-view").append(emailTd);
