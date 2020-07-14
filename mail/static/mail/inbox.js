@@ -220,9 +220,9 @@ function load_viewEmail(email) {
   emailBlock.appendChild(emailBlockUpTo);
   emailBlock.appendChild(emailBlockUpSubject);
   emailBlock.appendChild(emailBlockUpTime);
+  emailBlock.appendChild(replyButton);
   emailBlock.appendChild(lineBreak);
   emailBlock.appendChild(emailBlockDownBody);
-  emailBlock.appendChild(replyButton);
 
   // Add element to DOM
   document.querySelector("#emails-view").append(emailBlock);

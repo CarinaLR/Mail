@@ -36,6 +36,9 @@ textarea {
   background-color: #faf0e6;
   height: 432px;
   width: 839.904px;
+  padding-right: 15px;
+  padding-left: 15px;
+  justify-content: space-between;
 }
 
 .info {
