@@ -15,8 +15,11 @@ textarea {
   padding: 20px;
   margin: 10px;
   display: flex;
-  justify-content: space-between;
+  text-align: justify;
   border-style: outset;
+  clear: both;
+  vertical-align: inherit;
+  border-collapse: separate;
 }
 
 .divEmails {
@@ -33,8 +36,8 @@ textarea {
   direction: ltr;
   border-spacing: 0;
   border-collapse: collapse;
-  background-color: #f5f5dc;
-  height: 432px;
+  background-color: transparent;
+  height: content-box;
   width: content-box;
   padding-right: 15px;
   padding-left: 15px;
