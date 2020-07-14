@@ -186,9 +186,7 @@ function load_viewEmail(email) {
   document.querySelector("#compose-view").style.display = "none";
 
   //Set variables to pass as text
-  const sender =
-    email.sender.charAt(0).toUpperCase() +
-    email.sender.substr(1, email.sender.lastIndexOf("@") - 1);
+  const sender = email.sender;
   const recipients = email.recipients;
   const subject = email.subject;
   const time = email.timestamp;
