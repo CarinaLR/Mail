@@ -135,11 +135,11 @@ function add_emailsSent(contents) {
 
 // Load archive emails
 function loadArchive() {
-  fetch("/emails/archive")
+  fetch("/emails/inbox")
     .then((response) => response.json())
     .then((emails) => {
       // Print emails
-      console.log(emails);
+      console.log("archived ->", emails);
 
       // ... do something else with emails ...
       emails.forEach(add_emailsArchive);
@@ -152,12 +152,15 @@ function add_emailsArchive(contents) {
   const recipients = contents.recipients;
   const subject = contents.subject;
   const time = contents.timestamp;
+  const archived = contents.archived;
 
-  //Create td for each email
-  const emailTd = document.createElement("td");
-  emailTd.className = "tdEmails";
-  emailTd.innerHTML = `To: ${recipients} Subject:  ${subject} ${time}`;
+  if (archived !== true) {
+    //Create td for each email
+    const emailTd = document.createElement("td");
+    emailTd.className = "tdEmails";
+    emailTd.innerHTML = `To: ${recipients} Subject:  ${subject} ${time}`;
 
-  // Add post to DOM
-  document.querySelector("#emails-view").append(emailTd);
+    // Add post to DOM
+    document.querySelector("#emails-view").append(emailTd);
+  }
 }
