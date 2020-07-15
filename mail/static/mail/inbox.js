@@ -199,6 +199,7 @@ function add_emailsArchive(contents) {
   const subject = contents.subject;
   const time = contents.timestamp;
   const archived = contents.archived;
+  const email_id = contents.id;
 
   if (archived !== true) {
     //Create elements holding the information from each email in inbox
@@ -224,6 +225,19 @@ function add_emailsArchive(contents) {
     // Add post to DOM
     document.querySelector("#emails-view").append(emailInArchive);
   }
+  //Add event listener to each "div"
+  document.querySelector(".emailInbox").addEventListener("click", function () {
+    //Get request by id.
+    fetch(`/emails/${email_id}`)
+      .then((response) => response.json())
+      .then((email) => {
+        // Print emails
+        console.log("email ->", email);
+
+        // ... do something else with emails ...
+        load_viewEmail(email);
+      });
+  });
 }
 
 function load_viewEmail(email) {
@@ -262,8 +276,16 @@ function load_viewEmail(email) {
   const archivedButton = document.createElement("button");
   archivedButton.className = "btn btn-sm btn-outline-primary";
   archivedButton.innerHTML = "Archive";
+  //Add an event to the archive button to redirect the user to Archive page.
   archivedButton.addEventListener("click", function () {
     load_mailbox("archive");
+  });
+  const unArchivedButton = document.createElement("button");
+  unArchivedButton.className = "btn btn-sm btn-outline-primary";
+  unArchivedButton.innerHTML = "Unarchive";
+  //Add an event to the unArchive button to redirect the user to Inbox page.
+  unArchivedButton.addEventListener("click", function () {
+    load_mailbox("inbox");
   });
 
   //Create parent 'div' and append children elements
@@ -274,8 +296,11 @@ function load_viewEmail(email) {
   emailBlock.appendChild(emailBlockUpSubject);
   emailBlock.appendChild(emailBlockUpTime);
   emailBlock.appendChild(replyButton);
+  //If statement to determine if an email was archived or not, to show appropiate button
   if (archived === false) {
     emailBlock.appendChild(archivedButton);
+  } else {
+    emailBlock.appendChild(unArchivedButton);
   }
   emailBlock.appendChild(lineBreak);
   emailBlock.appendChild(emailBlockDownBody);
