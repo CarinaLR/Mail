@@ -88,27 +88,20 @@ hr {
   border-collapse: separate;
 }
 
-.inforFrom {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.infoSubject {
-  color: pink;
-}
-
 .infoTime {
+  color: gray;
   display: flex;
   justify-content: end;
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem, Arial, Helvetica, sans-serif;
+  font-size: 1.5, Arial, Helvetica, sans-serif;
   margin: 10px;
-  color: gray;
 }
 
 .nestedDiv {
+  margin: 10px;
   display: flex;
   justify-content: space-between;
-  padding-left: 10px;
-  border-collapse: separate;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.5, Arial, Helvetica, sans-serif;
+  width: 250px;
 }
