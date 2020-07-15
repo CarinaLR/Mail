@@ -87,7 +87,7 @@ function add_emailsInbox(contents) {
   const time = contents.timestamp;
   const read = contents.read;
   const email_id = contents.id;
-  console.log("email_id->", email_id);
+  console.log("contents ->", contents);
 
   //Create elements holding the information from each email in inbox
   const emailInfoFrom = document.createElement("div");
@@ -106,28 +106,30 @@ function add_emailsInbox(contents) {
   //Create parent 'div' and append children elements
   const emailInInbox = document.createElement("div");
   emailInInbox.className = "emailInbox";
+  if (read === false) {
+    emailInInbox.style.backgroundColor = "white";
+  } else {
+    emailInInbox.style.backgroundColor = "lightGrey";
+  }
   emailInInbox.appendChild(nestedDiv);
   emailInInbox.appendChild(emailInfoTime);
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailInInbox);
 
-  if (read !== true) {
-    document.querySelector(".emailInbox").style.backgroundColor = "white";
-  } else {
-    document.querySelector(".emailInbox").style.backgroundColor = "lightGrey";
-  }
-  document.querySelector(".emailInbox").onclick = () => {
-    fetch(`/emails/${email_id}`)
-      .then((response) => response.json())
-      .then((email) => {
-        // Print emails
-        console.log("email ->", email);
+  document.querySelectorAll(".emailInbox").forEach((email) => {
+    email.onclick = () => {
+      fetch(`/emails/${email_id}`)
+        .then((response) => response.json())
+        .then((email) => {
+          // Print emails
+          console.log("email ->", email);
 
-        // ... do something else with emails ...
-        load_viewEmail(email);
-      });
-  };
+          // ... do something else with emails ...
+          load_viewEmail(email);
+        });
+    };
+  });
 }
 
 // Load sent emails
