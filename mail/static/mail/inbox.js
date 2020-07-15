@@ -118,7 +118,9 @@ function add_emailsInbox(contents) {
   // Add post to DOM
   document.querySelector("#emails-view").append(emailInInbox);
 
+  //Add event listener to each "div"
   document.querySelector(".emailInbox").addEventListener("click", function () {
+    //Get request by id.
     fetch(`/emails/${email_id}`)
       .then((response) => response.json())
       .then((email) => {
@@ -235,6 +237,9 @@ function load_viewEmail(email) {
   const subject = email.subject;
   const time = email.timestamp;
   const body = email.body;
+  const read = email.read;
+  const id = email.id;
+  const archived = email.archived;
 
   // Show the selected email block
   document.querySelector("#emails-view").innerHTML = `<span></span>`;
@@ -254,6 +259,12 @@ function load_viewEmail(email) {
   const replyButton = document.createElement("button");
   replyButton.className = "btn btn-sm btn-outline-primary";
   replyButton.innerHTML = "Reply";
+  const archivedButton = document.createElement("button");
+  archivedButton.className = "btn btn-sm btn-outline-primary";
+  archivedButton.innerHTML = "Archive";
+  archivedButton.addEventListener("click", function () {
+    load_mailbox("archive");
+  });
 
   //Create parent 'div' and append children elements
   const emailBlock = document.createElement("div");
@@ -263,9 +274,22 @@ function load_viewEmail(email) {
   emailBlock.appendChild(emailBlockUpSubject);
   emailBlock.appendChild(emailBlockUpTime);
   emailBlock.appendChild(replyButton);
+  if (archived === false) {
+    emailBlock.appendChild(archivedButton);
+  }
   emailBlock.appendChild(lineBreak);
   emailBlock.appendChild(emailBlockDownBody);
 
   // Add element to DOM
   document.querySelector("#emails-view").append(emailBlock);
+
+  // if (read === false) {
+  //   //Put request to update email.
+  //   fetch(`/emails/${id}`, {
+  //     method: "PUT",
+  //     body: JSON.stringify({
+  //       archived: true,
+  //     }),
+  //   });
+  // }
 }
