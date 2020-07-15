@@ -82,7 +82,9 @@ function loadInbox() {
 // Add a new email to the corresponding mailbox with given contents to DOM
 function add_emailsInbox(contents) {
   //Set variables to pass as text
-  const sender = contents.sender;
+  const sender =
+    contents.sender.charAt(0).toUpperCase() +
+    contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1);
   const subject = contents.subject;
   const time = contents.timestamp;
   const read = contents.read;

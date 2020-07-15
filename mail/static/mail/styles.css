@@ -103,7 +103,7 @@ hr {
   justify-content: space-between;
   padding: 0.25rem 0.5rem;
   font-size: 1.5, Arial, Helvetica, sans-serif;
-  width: 250px;
+  width: 550px;
 }
 
 .nestedDivSent {
@@ -112,5 +112,5 @@ hr {
   justify-content: space-between;
   padding: 0.25rem 0.5rem;
   font-size: 1.5, Arial, Helvetica, sans-serif;
-  width: 350px;
+  width: 550px;
 }
