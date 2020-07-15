@@ -188,13 +188,28 @@ function add_emailsArchive(contents) {
   const archived = contents.archived;
 
   if (archived !== true) {
-    //Create td for each email
-    const emailTd = document.createElement("td");
-    emailTd.className = "tdEmails";
-    emailTd.innerHTML = `From: ${sender} Subject:  ${subject} ${time}`;
+    //Create elements holding the information from each email in inbox
+    const emailInfoFrom = document.createElement("div");
+    emailInfoFrom.innerHTML = `<span className="infoFrom">${sender}</span>`;
+    const emailInfoSubject = document.createElement("div");
+    emailInfoSubject.innerHTML = `<span className="infoSubject">${subject}</span>`;
+    const emailInfoTime = document.createElement("div");
+    emailInfoTime.innerHTML = `<span className="infoTime">${time}</span>`;
+
+    //Create a nested "div" to have 2 elements instead of 3 in the parent "div"
+    const nestedDiv = document.createElement("div");
+    nestedDiv.className = "nestedDiv";
+    nestedDiv.appendChild(emailInfoFrom);
+    nestedDiv.appendChild(emailInfoSubject);
+
+    //Create parent 'div' and append children elements
+    const emailInArchive = document.createElement("div");
+    emailInArchive.className = "emailInbox";
+    emailInArchive.appendChild(nestedDiv);
+    emailInArchive.appendChild(emailInfoTime);
 
     // Add post to DOM
-    document.querySelector("#emails-view").append(emailTd);
+    document.querySelector("#emails-view").append(emailInArchive);
   }
 }
 
