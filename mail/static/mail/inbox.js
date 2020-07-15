@@ -286,7 +286,7 @@ function load_viewEmail(email) {
     document.querySelector("#compose-subject").value = `Re: ${subject}`;
     document.querySelector(
       "#compose-body"
-    ).value = `On ${time} ${sender} wrote:\r\n ${body}`;
+    ).value = `On ${time} ${sender} wrote:\r\n ${body} \n --------------\n`;
   });
   const archivedButton = document.createElement("button");
   archivedButton.className = "btn btn-sm btn-outline-primary";
