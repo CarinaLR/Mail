@@ -105,3 +105,12 @@ hr {
   font-size: 1.5, Arial, Helvetica, sans-serif;
   width: 250px;
 }
+
+.nestedDivSent {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.5, Arial, Helvetica, sans-serif;
+  width: 350px;
+}

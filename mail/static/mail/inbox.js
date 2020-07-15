@@ -140,13 +140,28 @@ function add_emailsSent(contents) {
   const subject = contents.subject;
   const time = contents.timestamp;
 
-  //Create td for each email
-  const emailTd = document.createElement("td");
-  emailTd.className = "tdEmails";
-  emailTd.innerHTML = `To: ${recipients} Subject:  ${subject} ${time}`;
+  //Create elements holding the information from each email in inbox
+  const emailInfoTo = document.createElement("div");
+  emailInfoTo.innerHTML = `<span className="infoFrom">${recipients}</span>`;
+  const emailInfoSubject = document.createElement("div");
+  emailInfoSubject.innerHTML = `<span className="infoSubject">${subject}</span>`;
+  const emailInfoTime = document.createElement("div");
+  emailInfoTime.innerHTML = `<span className="infoTime">${time}</span>`;
+
+  //Create a nested "div" to have 2 elements instead of 3 in the parent "div"
+  const nestedDiv = document.createElement("div");
+  nestedDiv.className = "nestedDivSent";
+  nestedDiv.appendChild(emailInfoTo);
+  nestedDiv.appendChild(emailInfoSubject);
+
+  //Create parent 'div' and append children elements
+  const emailInSent = document.createElement("div");
+  emailInSent.className = "emailInbox";
+  emailInSent.appendChild(nestedDiv);
+  emailInSent.appendChild(emailInfoTime);
 
   // Add post to DOM
-  document.querySelector("#emails-view").append(emailTd);
+  document.querySelector("#emails-view").append(emailInSent);
 }
 
 // Load archive emails
