@@ -254,6 +254,8 @@ function load_viewEmail(email) {
   const read = email.read;
   const id = email.id;
   const archived = email.archived;
+  var text = document.querySelector("#compose-body").value;
+  text = text.replace(/\r?\n/g, "<br />");
 
   // Show the selected email block
   document.querySelector("#emails-view").innerHTML = `<span></span>`;
@@ -273,6 +275,19 @@ function load_viewEmail(email) {
   const replyButton = document.createElement("button");
   replyButton.className = "btn btn-sm btn-outline-primary";
   replyButton.innerHTML = "Reply";
+  //Add an event to the reply button to allow user to reply to the sender.
+  replyButton.addEventListener("click", function () {
+    // Show compose view and hide other views
+    document.querySelector("#emails-view").style.display = "none";
+    document.querySelector("#compose-view").style.display = "block";
+
+    // Pre-fill composition fields
+    document.querySelector("#compose-recipients").value = sender;
+    document.querySelector("#compose-subject").value = `Re: ${subject}`;
+    document.querySelector(
+      "#compose-body"
+    ).value = `On ${time} ${sender} wrote:\r\n ${body}`;
+  });
   const archivedButton = document.createElement("button");
   archivedButton.className = "btn btn-sm btn-outline-primary";
   archivedButton.innerHTML = "Archive";
