@@ -82,28 +82,42 @@ function loadInbox() {
 // Add a new email to the corresponding mailbox with given contents to DOM
 function add_emailsInbox(contents) {
   //Set variables to pass as text
-  const sender =
-    contents.sender.charAt(0).toUpperCase() +
-    contents.sender.substr(1, contents.sender.lastIndexOf("@") - 1);
+  const sender = contents.sender;
   const subject = contents.subject;
   const time = contents.timestamp;
   const read = contents.read;
   const email_id = contents.id;
 
-  //Create td for each email
-  const emailTd = document.createElement("td");
-  emailTd.className = "tdEmails";
-  emailTd.innerHTML = `From: ${sender} Subject:  ${subject} ${time}`;
+  //Create elements holding the information from each email in inbox
+  const emailInfoFrom = document.createElement("div");
+  emailInfoFrom.innerHTML = `<span className="infoFrom">${sender}</span>`;
+  const emailInfoSubject = document.createElement("div");
+  emailInfoSubject.innerHTML = `<span className="infoSubject">${subject}</span>`;
+  const emailInfoTime = document.createElement("div");
+  emailInfoTime.innerHTML = `<span className="infoTime">${time}</span>`;
+
+  //Create a nested "div" to have 2 elements instead of 3 in the parent "div"
+  const nestedDiv = document.createElement("div");
+  nestedDiv.className = "nestedDiv";
+  nestedDiv.appendChild(emailInfoFrom);
+  nestedDiv.appendChild(emailInfoSubject);
+
+  //Create parent 'div' and append children elements
+  const emailInInbox = document.createElement("div");
+  emailInInbox.className = "emailInbox";
+  emailInInbox.appendChild(nestedDiv);
+  emailInInbox.appendChild(emailInfoTime);
 
   // Add post to DOM
-  document.querySelector("#emails-view").append(emailTd);
+  document.querySelector("#emails-view").append(emailInInbox);
 
   if (read !== true) {
-    document.querySelector(".tdEmails").style.backgroundColor = "lightGrey";
+    document.querySelector(".emailInbox").style.backgroundColor = "lightGrey";
   } else {
-    document.querySelector(".tdEmails").style.backgroundColor = "lavenderBlush";
+    document.querySelector(".emailInbox").style.backgroundColor =
+      "lavenderBlush";
   }
-  document.querySelector(".tdEmails").addEventListener("click", requestEmail);
+  document.querySelector(".emailInbox").addEventListener("click", requestEmail);
 }
 
 // Load sent emails

@@ -77,3 +77,38 @@ hr {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.emailInbox {
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-style: outset;
+  vertical-align: inherit;
+  border-collapse: separate;
+}
+
+.inforFrom {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.infoSubject {
+  color: pink;
+}
+
+.infoTime {
+  display: flex;
+  justify-content: end;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem, Arial, Helvetica, sans-serif;
+  margin: 10px;
+  color: gray;
+}
+
+.nestedDiv {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  border-collapse: separate;
+}
