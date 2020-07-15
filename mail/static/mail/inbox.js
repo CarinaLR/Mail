@@ -87,6 +87,7 @@ function add_emailsInbox(contents) {
   const time = contents.timestamp;
   const read = contents.read;
   const email_id = contents.id;
+  console.log("email_id->", email_id);
 
   //Create elements holding the information from each email in inbox
   const emailInfoFrom = document.createElement("div");
@@ -112,12 +113,21 @@ function add_emailsInbox(contents) {
   document.querySelector("#emails-view").append(emailInInbox);
 
   if (read !== true) {
-    document.querySelector(".emailInbox").style.backgroundColor = "lightGrey";
+    document.querySelector(".emailInbox").style.backgroundColor = "white";
   } else {
-    document.querySelector(".emailInbox").style.backgroundColor =
-      "lavenderBlush";
+    document.querySelector(".emailInbox").style.backgroundColor = "lightGrey";
   }
-  document.querySelector(".emailInbox").addEventListener("click", requestEmail);
+  document.querySelector(".emailInbox").onclick = () => {
+    fetch(`/emails/${email_id}`)
+      .then((response) => response.json())
+      .then((email) => {
+        // Print emails
+        console.log("email ->", email);
+
+        // ... do something else with emails ...
+        load_viewEmail(email);
+      });
+  };
 }
 
 // Load sent emails
@@ -211,18 +221,6 @@ function add_emailsArchive(contents) {
     // Add post to DOM
     document.querySelector("#emails-view").append(emailInArchive);
   }
-}
-
-function requestEmail() {
-  fetch("/emails/2")
-    .then((response) => response.json())
-    .then((email) => {
-      // Print emails
-      console.log("email ->", email);
-
-      // ... do something else with emails ...
-      load_viewEmail(email);
-    });
 }
 
 function load_viewEmail(email) {
