@@ -118,8 +118,6 @@ function add_emailsInbox(contents) {
       .then((email) => {
         // Print emails
         console.log("email ->", email);
-
-        // ... do something else with emails ...
         load_viewEmail(email);
       });
     if (read === false) {
@@ -153,7 +151,6 @@ function loadSent() {
       // Print emails
       console.log(emails);
 
-      // ... do something else with emails ...
       emails.forEach(add_emailsSent);
     });
 }
@@ -191,16 +188,13 @@ function add_emailsSent(contents) {
 
 // Load archive emails
 function loadArchive() {
-  fetch("/emails/inbox")
+  fetch("/emails/archive")
     .then((response) => response.json())
     .then((emails) => {
-      // // ... do something else with emails ...
+      // Print emails
+      console.log("archived e ->", emails);
+
       emails.forEach(add_emailsArchive);
-      // emails.forEach((email) => {
-      //   if (email.archived === true) {
-      //     add_emailsArchive(email);
-      //   }
-      // });
     });
 }
 
@@ -215,43 +209,28 @@ function add_emailsArchive(contents) {
   const archived = contents.archived;
   const email_id = contents.id;
 
-  if (archived === true) {
-    //Create elements holding the information from each email in inbox
-    const emailInfoFrom = document.createElement("div");
-    emailInfoFrom.innerHTML = `<span className="infoFrom">${sender}</span>`;
-    const emailInfoSubject = document.createElement("div");
-    emailInfoSubject.innerHTML = `<span className="infoSubject">${subject}</span>`;
-    const emailInfoTime = document.createElement("div");
-    emailInfoTime.innerHTML = `<span className="infoTime">${time}</span>`;
+  //Create elements holding the information from each email in inbox
+  const emailInfoFrom = document.createElement("div");
+  emailInfoFrom.innerHTML = `<span className="infoFrom">${sender}</span>`;
+  const emailInfoSubject = document.createElement("div");
+  emailInfoSubject.innerHTML = `<span className="infoSubject">${subject}</span>`;
+  const emailInfoTime = document.createElement("div");
+  emailInfoTime.innerHTML = `<span className="infoTime">${time}</span>`;
 
-    //Create a nested "div" to have 2 elements instead of 3 in the parent "div"
-    const nestedDiv = document.createElement("div");
-    nestedDiv.className = "nestedDiv";
-    nestedDiv.appendChild(emailInfoFrom);
-    nestedDiv.appendChild(emailInfoSubject);
+  //Create a nested "div" to have 2 elements instead of 3 in the parent "div"
+  const nestedDiv = document.createElement("div");
+  nestedDiv.className = "nestedDiv";
+  nestedDiv.appendChild(emailInfoFrom);
+  nestedDiv.appendChild(emailInfoSubject);
 
-    //Create parent 'div' and append children elements
-    const emailInArchive = document.createElement("div");
-    emailInArchive.className = "emailInbox";
-    emailInArchive.appendChild(nestedDiv);
-    emailInArchive.appendChild(emailInfoTime);
+  //Create parent 'div' and append children elements
+  const emailInArchive = document.createElement("div");
+  emailInArchive.className = "emailInbox";
+  emailInArchive.appendChild(nestedDiv);
+  emailInArchive.appendChild(emailInfoTime);
 
-    // Add post to DOM
-    document.querySelector("#emails-view").append(emailInArchive);
-  }
-  //Add event listener to each "div"
-  // document.querySelector(".emailInbox").addEventListener("click", function () {
-  //   //Get request by id.
-  //   fetch(`/emails/${email_id}`)
-  //     .then((response) => response.json())
-  //     .then((email) => {
-  //       // Print emails
-  //       console.log("email ->", email);
-
-  //       // ... do something else with emails ...
-  //       load_viewEmail(email);
-  //     });
-  // });
+  // Add post to DOM
+  document.querySelector("#emails-view").append(emailInArchive);
 }
 
 function load_viewEmail(email) {
