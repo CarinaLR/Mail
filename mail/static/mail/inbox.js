@@ -121,6 +121,15 @@ function add_emailsInbox(contents) {
         // ... do something else with emails ...
         load_viewEmail(email);
       });
+    if (read === false) {
+      //Put request to update email.
+      fetch(`/emails/${email_id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          read: true,
+        }),
+      });
+    }
   });
   //If statements to change background color of "div"
   if (read === false) {
