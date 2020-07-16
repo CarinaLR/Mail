@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Print result
         console.log(result);
       });
+    //Once the email has been sent, load sent mailbox, return flase to prevent reload.
     load_mailbox("sent");
     return false;
   };
