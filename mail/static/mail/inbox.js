@@ -90,6 +90,7 @@ function add_emailsInbox(contents) {
   const time = contents.timestamp;
   const read = contents.read;
   const email_id = contents.id;
+  const archived = contents.archived;
   console.log("contents ->", contents);
 
   //Create elements holding the information from each email in inbox
@@ -193,11 +194,13 @@ function loadArchive() {
   fetch("/emails/inbox")
     .then((response) => response.json())
     .then((emails) => {
-      // Print emails
-      console.log("archived ->", emails);
-
-      // ... do something else with emails ...
+      // // ... do something else with emails ...
       emails.forEach(add_emailsArchive);
+      // emails.forEach((email) => {
+      //   if (email.archived === true) {
+      //     add_emailsArchive(email);
+      //   }
+      // });
     });
 }
 
@@ -212,7 +215,7 @@ function add_emailsArchive(contents) {
   const archived = contents.archived;
   const email_id = contents.id;
 
-  if (archived !== true) {
+  if (archived === true) {
     //Create elements holding the information from each email in inbox
     const emailInfoFrom = document.createElement("div");
     emailInfoFrom.innerHTML = `<span className="infoFrom">${sender}</span>`;
@@ -237,18 +240,18 @@ function add_emailsArchive(contents) {
     document.querySelector("#emails-view").append(emailInArchive);
   }
   //Add event listener to each "div"
-  document.querySelector(".emailInbox").addEventListener("click", function () {
-    //Get request by id.
-    fetch(`/emails/${email_id}`)
-      .then((response) => response.json())
-      .then((email) => {
-        // Print emails
-        console.log("email ->", email);
+  // document.querySelector(".emailInbox").addEventListener("click", function () {
+  //   //Get request by id.
+  //   fetch(`/emails/${email_id}`)
+  //     .then((response) => response.json())
+  //     .then((email) => {
+  //       // Print emails
+  //       console.log("email ->", email);
 
-        // ... do something else with emails ...
-        load_viewEmail(email);
-      });
-  });
+  //       // ... do something else with emails ...
+  //       load_viewEmail(email);
+  //     });
+  // });
 }
 
 function load_viewEmail(email) {
@@ -262,12 +265,11 @@ function load_viewEmail(email) {
   const subject = email.subject;
   const time = email.timestamp;
   const body = email.body;
-  const read = email.read;
-  const id = email.id;
+  const email_id = email.id;
   const archived = email.archived;
   var text = document.querySelector("#compose-body").value;
   text = text.replace(/\r?\n/g, "<br />");
-
+  console.log("archived ->", archived);
   // Show the selected email block
   document.querySelector("#emails-view").innerHTML = `<span></span>`;
 
@@ -304,7 +306,16 @@ function load_viewEmail(email) {
   archivedButton.innerHTML = "Archive";
   //Add an event to the archive button to redirect the user to Archive page.
   archivedButton.addEventListener("click", function () {
-    load_mailbox("archive");
+    if (archived === false) {
+      //Put request to update email.
+      fetch(`/emails/${email_id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          archived: true,
+        }),
+      });
+      load_mailbox("inbox");
+    }
   });
   const unArchivedButton = document.createElement("button");
   unArchivedButton.className = "btn btn-sm btn-outline-primary";
@@ -333,14 +344,4 @@ function load_viewEmail(email) {
 
   // Add element to DOM
   document.querySelector("#emails-view").append(emailBlock);
-
-  // if (read === false) {
-  //   //Put request to update email.
-  //   fetch(`/emails/${id}`, {
-  //     method: "PUT",
-  //     body: JSON.stringify({
-  //       archived: true,
-  //     }),
-  //   });
-  // }
 }
