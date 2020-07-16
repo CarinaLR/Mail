@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Print result
         console.log(result);
       });
-    //Once the email has been sent, load sent mailbox, return flase to prevent reload.
+    //Once the email has been sent, load sent mailbox, return false to prevent reload.
     load_mailbox("sent");
     return false;
   };
@@ -75,7 +75,6 @@ function loadInbox() {
       // Print emails
       console.log("emails ->", emails);
 
-      // ... do something else with emails ...
       emails.forEach(add_emailsInbox);
     });
 }
@@ -90,7 +89,6 @@ function add_emailsInbox(contents) {
   const time = contents.timestamp;
   const read = contents.read;
   const email_id = contents.id;
-  const archived = contents.archived;
   console.log("contents ->", contents);
 
   //Create elements holding the information from each email in inbox
@@ -226,6 +224,17 @@ function add_emailsArchive(contents) {
   //Create parent 'div' and append children elements
   const emailInArchive = document.createElement("div");
   emailInArchive.className = "emailInbox";
+  //Add event listener to each "div"
+  emailInArchive.addEventListener("click", function () {
+    //Get request by id.
+    fetch(`/emails/${email_id}`)
+      .then((response) => response.json())
+      .then((email) => {
+        // Print emails
+        console.log("email ->", email);
+        load_viewEmail(email);
+      });
+  });
   emailInArchive.appendChild(nestedDiv);
   emailInArchive.appendChild(emailInfoTime);
 
@@ -301,7 +310,16 @@ function load_viewEmail(email) {
   unArchivedButton.innerHTML = "Unarchive";
   //Add an event to the unArchive button to redirect the user to Inbox page.
   unArchivedButton.addEventListener("click", function () {
-    load_mailbox("inbox");
+    if (archived !== false) {
+      //Put request to update email.
+      fetch(`/emails/${email_id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          archived: false,
+        }),
+      });
+      load_mailbox("inbox");
+    }
   });
 
   //Create parent 'div' and append children elements
