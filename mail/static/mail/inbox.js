@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Print result
         console.log(result);
       });
-    // return false;
     load_mailbox("sent");
+    return false;
   };
 
   // By default, load the inbox
