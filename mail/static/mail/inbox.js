@@ -109,20 +109,8 @@ function add_emailsInbox(contents) {
   //Create parent 'div' and append children elements
   const emailInInbox = document.createElement("div");
   emailInInbox.className = "emailInbox";
-  //If statements to change background color of "div"
-  if (read === false) {
-    emailInInbox.style.backgroundColor = "white";
-  } else {
-    emailInInbox.style.backgroundColor = "lightGrey";
-  }
-  emailInInbox.appendChild(nestedDiv);
-  emailInInbox.appendChild(emailInfoTime);
-
-  // Add post to DOM
-  document.querySelector("#emails-view").append(emailInInbox);
-
   //Add event listener to each "div"
-  document.querySelector(".emailInbox").addEventListener("click", function () {
+  emailInInbox.addEventListener("click", function () {
     //Get request by id.
     fetch(`/emails/${email_id}`)
       .then((response) => response.json())
@@ -134,6 +122,17 @@ function add_emailsInbox(contents) {
         load_viewEmail(email);
       });
   });
+  //If statements to change background color of "div"
+  if (read === false) {
+    emailInInbox.style.backgroundColor = "white";
+  } else {
+    emailInInbox.style.backgroundColor = "lightGrey";
+  }
+  emailInInbox.appendChild(nestedDiv);
+  emailInInbox.appendChild(emailInfoTime);
+
+  // Add post to DOM
+  document.querySelector("#emails-view").append(emailInInbox);
 }
 
 // Load sent emails
