@@ -57,23 +57,29 @@ function load_mailbox(mailbox) {
   }</h3>`;
 
   if (mailbox === "inbox") {
-    loadInbox();
+    // Load inbox emails
+    fetch("/emails/inbox")
+      .then((response) => response.json())
+      .then((emails) => {
+        emails.forEach(add_emailsInbox);
+      });
   }
   if (mailbox === "sent") {
-    loadSent();
+    // Load sent emails
+    fetch("/emails/sent")
+      .then((response) => response.json())
+      .then((emails) => {
+        emails.forEach(add_emailsSent);
+      });
   }
   if (mailbox === "archive") {
-    loadArchive();
+    // Load archive emails
+    fetch("/emails/archive")
+      .then((response) => response.json())
+      .then((emails) => {
+        emails.forEach(add_emailsArchive);
+      });
   }
-}
-
-// Load inbox emails
-function loadInbox() {
-  fetch("/emails/inbox")
-    .then((response) => response.json())
-    .then((emails) => {
-      emails.forEach(add_emailsInbox);
-    });
 }
 
 // Add a new email to the corresponding mailbox with given contents to DOM
@@ -135,15 +141,6 @@ function add_emailsInbox(contents) {
   document.querySelector("#emails-view").append(emailInInbox);
 }
 
-// Load sent emails
-function loadSent() {
-  fetch("/emails/sent")
-    .then((response) => response.json())
-    .then((emails) => {
-      emails.forEach(add_emailsSent);
-    });
-}
-
 // Add a sent email to the corresponding mailbox with given contents to DOM
 function add_emailsSent(contents) {
   //Set variables to pass as text
@@ -183,15 +180,6 @@ function add_emailsSent(contents) {
 
   // Add post to DOM
   document.querySelector("#emails-view").append(emailInSent);
-}
-
-// Load archive emails
-function loadArchive() {
-  fetch("/emails/archive")
-    .then((response) => response.json())
-    .then((emails) => {
-      emails.forEach(add_emailsArchive);
-    });
 }
 
 // Add a new email to the corresponding mailbox with given contents to DOM
