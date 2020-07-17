@@ -250,8 +250,19 @@ function load_viewEmail(email) {
   const body = email.body;
   const email_id = email.id;
   const archived = email.archived;
+  //Replace blank space with a break in html element.
   var text = document.querySelector("#compose-body").value;
   text = text.replace(/\r?\n/g, "<br />");
+  //Delete repetitive "Re:" from the reply.
+  const checkSubject = subject.split(" ");
+  for (let i = 0; i < checkSubject.length; i++) {
+    let letter = checkSubject[i];
+    if (letter === "R" && letter === "e" && letter === ":") {
+      checkSubject.splice(i, 1);
+    }
+  }
+  checkSubject.splice(0, 1);
+
   // Show the selected email block
   document.querySelector("#emails-view").innerHTML = `<span></span>`;
 
@@ -278,7 +289,7 @@ function load_viewEmail(email) {
 
     // Pre-fill composition fields
     document.querySelector("#compose-recipients").value = sender;
-    document.querySelector("#compose-subject").value = `Re: ${subject}`;
+    document.querySelector("#compose-subject").value = `Re: ${checkSubject}`;
     document.querySelector(
       "#compose-body"
     ).value = `On ${time} ${sender} wrote:\r\n ${body} \n --------------\n`;
